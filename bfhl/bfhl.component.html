@@ -1,0 +1,31 @@
+<div>
+  <h1>{{ response?.roll_number || 'ABCD123' }}</h1>
+  <form (ngSubmit)="onSubmit()">
+    <textarea [(ngModel)]="jsonInput" rows="5" cols="50" placeholder="Enter JSON here..." name="jsonInput"></textarea>
+    <button type="submit">Submit</button>
+  </form>
+  <p *ngIf="error" style="color: red;">{{ error }}</p>
+  <div *ngIf="response">
+    <label>
+      <input type="checkbox" #numberCheckbox (change)="onFilterChange('Numbers', numberCheckbox.checked)">
+      Numbers
+    </label>
+    <label>
+      <input type="checkbox" #alphabetCheckbox (change)="onFilterChange('Alphabets', alphabetCheckbox.checked)">
+      Alphabets
+    </label>
+    <label>
+      <input type="checkbox" #lowercaseCheckbox (change)="onFilterChange('Highest lowercase alphabet', lowercaseCheckbox.checked)">
+      Highest lowercase alphabet
+    </label>
+    <div *ngIf="selectedFilters.includes('Numbers') && response.numbers && response.numbers.length">
+      <p>Numbers: {{ response.numbers.join(', ') }}</p>
+    </div>
+    <div *ngIf="selectedFilters.includes('Alphabets') && response.alphabets && response.alphabets.length">
+      <p>Alphabets: {{ response.alphabets.join(', ') }}</p>
+    </div>
+    <div *ngIf="selectedFilters.includes('Highest lowercase alphabet') && response.highest_lowercase_alphabet && response.highest_lowercase_alphabet.length">
+      <p>Highest lowercase alphabet: {{ response.highest_lowercase_alphabet.join(', ') }}</p>
+    </div>
+  </div>
+</div>
